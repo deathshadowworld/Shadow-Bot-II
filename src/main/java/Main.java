@@ -17,12 +17,14 @@ import java.util.List;
 
 /*  done~~1. bot_token to be excluded from .java files and use file i/o
     done~converted to ArrayList~2. pop custom reaction arrays as vectors or use file i/o
-        2a. make custom reactions writable
+        2.a. make custom reactions writable
+            2.a.i.  accept %% commands and turn to array of 3 elements
+            2.a.ii. append array to file
     3. embed
     4. moderating commands
-        4a. kick
-        4b. ban
-        4c. mute
+        4.a. kick
+        4.b. ban
+        4.c. mute
     5.
 */
 public class Main extends ListenerAdapter {
@@ -98,8 +100,9 @@ public class Main extends ListenerAdapter {
         }
 
         //special(?) commands
+        //check user for authority
         if(lowered.equals("am i a bot master")){
-            if (human_id.equals(bot_master)){
+            if (human_id.equals(getBot_master())){
                 channel.sendMessage("yes").queue();
                 System.out.println("The bot said:\nYes");
                 return;
@@ -109,6 +112,7 @@ public class Main extends ListenerAdapter {
                 return;
             }
         }
+        //help command
         //under development
         if(lowered.equals("%%help")){
             channel.sendMessage("Command is under development.").queue();
@@ -119,29 +123,33 @@ public class Main extends ListenerAdapter {
         //admin commands
         if (lowered.startsWith("%%")){
         if(human_id.equals(getBot_master())){
+            //bot shut down
             if(lowered.equals("%%sdb")){
                 System.out.println("Shutting down b0ss");
                 channel.sendMessage("Shutting down b0ss").queue();
                 event.getJDA().shutdown();
                 System.exit(0);
             }
+            //fetch emotes from a guild
             if (lowered.equals("%%fetch")){
                 System.out.println(guild.getEmotes());
             }
-            //under development
+            //kick user
+            /*//under development
             if (lowered.equals("%%kick")){
+                List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
                 if(!member.hasPermission(Permission.KICK_MEMBERS)) {
                     channel.sendMessage("You don't have permission to kick people!").queue();
                     return;
                 }
-                List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
-                if(mentionedMembers.isEmpty()) {
+                else if(mentionedMembers.isEmpty()) {
                     channel.sendMessage("You must mention who you want to be kicked").queue();
                     return;
                 }
-                guild.getController().kick(mentionedMembers.get(0)).queue();
-                channel.sendMessage("Successfully kicked " + mentionedMembers.get(0).getUser().getName()).queue();
-
+                else {
+                    guild.getController().kick(mentionedMembers.get(0)).queue();
+                    channel.sendMessage("Successfully kicked " + mentionedMembers.get(0).getUser().getName()).queue();
+                }*/
 
             }
 
@@ -153,7 +161,7 @@ public class Main extends ListenerAdapter {
         }
         }
 
-    }
+
 
     public static String getBot_master(){
         return bot_master;
