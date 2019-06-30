@@ -2,11 +2,12 @@
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.OnlineStatus;
-import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import javax.security.auth.login.LoginException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,17 +30,20 @@ import java.util.List;
 */
 public class Main extends ListenerAdapter {
 
-    private static String bot_master;
-    private static String token;
-    private static ArrayList<String> promptlist = new ArrayList<>();
-    private static ArrayList<String> answerlist = new ArrayList<>();
-    private static ArrayList<String> credentials = new ArrayList<>();
+        private static String bot_master, token;
+        private static String cred_path = "C:/Users/testerr/Documents/bot_info/credentials.txt";
+        private static String react_path = "C:/Users/testerr/Documents/bot_info/customreactions.txt";
+        private static ArrayList<String> promptlist = new ArrayList<>();
+        private static ArrayList<String> answerlist = new ArrayList<>();
+        private static ArrayList<String> credentials = new ArrayList<>();
+        private static BufferedWriter writer;
+        private static String content, lowered;
 
     public static void main(String[] args) throws LoginException, IOException {
 
         //file input
-        Path p1 = Paths.get("C:/Users/testerr/Documents/bot_info/credentials.txt");
-        Path p2 = Paths.get("C:/Users/testerr/Documents/bot_info/customreactions.txt");
+        Path p1 = Paths.get(cred_path);
+        Path p2 = Paths.get(react_path);
         List<String> details = Files.readAllLines(p1);
         List<String> c_react = Files.readAllLines(p2);
         //variable setup
@@ -54,6 +58,7 @@ public class Main extends ListenerAdapter {
         }
         bot_master = credentials.get(1);
         token = credentials.get(3);
+        writer = new BufferedWriter(new FileWriter(react_path, true));
 
         //bot setup
         JDABuilder builder = new JDABuilder(AccountType.BOT);
@@ -65,9 +70,9 @@ public class Main extends ListenerAdapter {
     }
 
     @Override
-    public void onMessageReceived(MessageReceivedEvent event){
+    public void onMessageReceived(MessageReceivedEvent event) {
         //ignores bot
-        if(event.getAuthor().isBot()){
+        if (event.getAuthor().isBot()) {
             return;
         }
         //guild variables
@@ -81,14 +86,15 @@ public class Main extends ListenerAdapter {
         MessageChannel channel = event.getChannel();
         String channel_name = channel.getName();
         Message message = event.getMessage();
-        String content = message.getContentRaw();
-        String lowered = content.toLowerCase();
+        content = message.getContentRaw();
+        lowered = content.toLowerCase();
+
 
         //logger
-        System.out.println("A human, " + human_name + " with ID " + human_id + " in " + channel_name + " of " + guild_name + " said \n" + content);
+        System.out.println("A human, " + human_name + " in " + channel_name + " of " + guild_name + " said \n" + content);
 
         //custom reactions
-        for(int i = 0;i<promptlist.size();i++) {
+        for (int i = 0; i < promptlist.size(); i++) {
             if (lowered.contains(promptlist.get(1))) {
                 channel.sendMessage(answerlist.get(1)).queue();
                 System.out.println("The bot said:\n" + answerlist.get(1));
@@ -101,67 +107,68 @@ public class Main extends ListenerAdapter {
 
         //special(?) commands
         //check user for authority
-        if(lowered.equals("am i a bot master")){
-            if (human_id.equals(getBot_master())){
+        if (lowered.equals("am i a bot master")) {
+            if (human_id.equals(getBot_master())) {
                 channel.sendMessage("yes").queue();
                 System.out.println("The bot said:\nYes");
                 return;
-            }
-            else {
+            } else {
                 channel.sendMessage("Imagine trying to master a bot <:pathetic:446632850880593922>").queue();
                 return;
             }
         }
         //help command
         //under development
-        if(lowered.equals("%%help")){
+        if (lowered.equals("%%help")) {
             channel.sendMessage("Command is under development.").queue();
 
         }
 
 
         //admin commands
-        if (lowered.startsWith("%%")){
-        if(human_id.equals(getBot_master())){
-            //bot shut down
-            if(lowered.equals("%%sdb")){
-                System.out.println("Shutting down b0ss");
-                channel.sendMessage("Shutting down b0ss").queue();
-                event.getJDA().shutdown();
-                System.exit(0);
-            }
-            //fetch emotes from a guild
-            if (lowered.equals("%%fetch")){
-                System.out.println(guild.getEmotes());
-            }
-            //kick user
-            /*//under development
-            if (lowered.equals("%%kick")){
-                List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
-                if(!member.hasPermission(Permission.KICK_MEMBERS)) {
-                    channel.sendMessage("You don't have permission to kick people!").queue();
-                    return;
+        if (lowered.startsWith("%%")) {
+            if (human_id.equals(getBot_master())) {
+                //bot shut down
+                if (lowered.equals("%%sdb")) {
+                    System.out.println("Shutting down b0ss");
+                    channel.sendMessage("Shutting down b0ss").queue();
+                    event.getJDA().shutdown();
+                    System.exit(0);
                 }
-                else if(mentionedMembers.isEmpty()) {
-                    channel.sendMessage("You must mention who you want to be kicked").queue();
-                    return;
+                //fetch emotes from a guild
+                if (lowered.equals("%%fetch")) {
+                    System.out.println(guild.getEmotes());
                 }
-                else {
-                    guild.getController().kick(mentionedMembers.get(0)).queue();
-                    channel.sendMessage("Successfully kicked " + mentionedMembers.get(0).getUser().getName()).queue();
-                }*/
+                //add new reaction to list
+                if (lowered.startsWith("%add")) {
+                    //writeReactiontoFile();
+                    channel.sendMessage("cant use yet").queue();
 
+                } else {
+                    String answer = "Error 403: Permission not Found\nInvoker is not a bot master";
+                    channel.sendMessage(answer).queue();
+                    System.out.println(answer);
+                }
             }
-
         }
-        else {
-            String answer ="Error 403: Permission not Found\nInvoker is not a bot master";
-            channel.sendMessage(answer).queue();
-            System.out.println(answer);
-        }
-        }
+    }
 
 
+    public boolean writeReactiontoFile()throws IOException{
+        ArrayList<String> add = new ArrayList<>();
+        String[] words = content.split("\"+");
+
+        for(int i = 0;i<(words.length);i++){
+            add.add(words[i]);
+        }
+        add.remove(0);
+        for( int i = 0; i<add.size();i++){
+            writer.append(System.lineSeparator());
+            writer.append(add.get(i));
+        }
+        writer.close();
+        return true;
+    }
 
     public static String getBot_master(){
         return bot_master;
@@ -169,4 +176,5 @@ public class Main extends ListenerAdapter {
     public static String getToken(){
         return token;
     }
+
 }
