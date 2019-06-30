@@ -1,1 +1,1 @@
-web: java -jar build/libs/mein-second-1.0-SNAPSHOT-all.jar
+worker: java -jar build/libs/mein-second-1.0-SNAPSHOT-all.jar
