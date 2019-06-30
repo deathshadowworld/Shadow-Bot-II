@@ -4,6 +4,7 @@ import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import javax.security.auth.login.LoginException;
 import java.io.BufferedWriter;
@@ -33,10 +34,14 @@ public class Main extends ListenerAdapter {
         private static String bot_master, token;
         private static String cred_path = "C:/Users/testerr/Documents/bot_info/credentials.txt";
         private static String react_path = "C:/Users/testerr/Documents/bot_info/customreactions.txt";
+        private static String pm_path = "C:/Users/testerr/Documents/bot_info/privatemessages.txt";
         private static ArrayList<String> promptlist = new ArrayList<>();
         private static ArrayList<String> answerlist = new ArrayList<>();
+        private static ArrayList<String> prompt_pm = new ArrayList<>();
+        private static ArrayList<String> answer_pm = new ArrayList<>();
         private static ArrayList<String> credentials = new ArrayList<>();
         private static BufferedWriter writer;
+        private static BufferedWriter writer1;
         private static String content, lowered;
 
     public static void main(String[] args) throws LoginException, IOException {
@@ -44,8 +49,10 @@ public class Main extends ListenerAdapter {
         //file input
         Path p1 = Paths.get(cred_path);
         Path p2 = Paths.get(react_path);
+        Path p3 = Paths.get(pm_path);
         List<String> details = Files.readAllLines(p1);
         List<String> c_react = Files.readAllLines(p2);
+        List<String> pm_react = Files.readAllLines(p3);
         //variable setup
         for(int i = 0;i<details.size();i++){
             credentials.add(details.get(i));
@@ -56,10 +63,16 @@ public class Main extends ListenerAdapter {
         for(int i = 1;i<c_react.size();i=i+2){
             answerlist.add(c_react.get(i));
         }
+        for(int i = 0;i<pm_react.size();i=i+2){
+            prompt_pm.add(pm_react.get(i));
+        }
+        for(int i = 1;i<pm_react.size();i=i+2){
+            answer_pm.add(pm_react.get(i));
+        }
         bot_master = credentials.get(1);
         token = credentials.get(3);
-        writer = new BufferedWriter(new FileWriter(react_path, true));
-
+        writer1 = new BufferedWriter(new FileWriter(react_path, true));
+        writer = new BufferedWriter(new FileWriter(pm_path, true));
         //bot setup
         JDABuilder builder = new JDABuilder(AccountType.BOT);
         builder.setToken(getToken());
@@ -152,9 +165,50 @@ public class Main extends ListenerAdapter {
             }
         }
     }
+    @Override
+    public void onPrivateMessageReceived(PrivateMessageReceivedEvent event){
+        //ignores bot
+        if (event.getAuthor().isBot()) {
+            return;
+        }
+        //user variables
+        String human_id = event.getAuthor().getId();
+        String human_name = event.getAuthor().getName();
+        //message variables
+        MessageChannel channel = event.getChannel();
+        String channel_name = channel.getName();
+        Message message = event.getMessage();
+        content = message.getContentRaw();
+        lowered = content.toLowerCase();
 
+        //logger
+        System.out.println("A human, " + human_name + " in " + channel_name  + " said \n" + content);
 
-    public boolean writeReactiontoFile()throws IOException{
+        //custom reactions
+        for (int i = 0; i < prompt_pm.size(); i++) {
+            if (lowered.equals(prompt_pm.get(i))) {
+                channel.sendMessage(answer_pm.get(i)).queue();
+                System.out.println("The bot said:\n" + answer_pm.get(i));
+            }
+        }
+    }
+
+    public boolean writeCReactiontoFile()throws IOException{
+        ArrayList<String> add = new ArrayList<>();
+        String[] words = content.split("\"+");
+
+        for(int i = 0;i<(words.length);i++){
+            add.add(words[i]);
+        }
+        add.remove(0);
+        for( int i = 0; i<add.size();i++){
+            writer1.append(System.lineSeparator());
+            writer1.append(add.get(i));
+        }
+        writer1.close();
+        return true;
+    }
+    public boolean writepmReactiontoFile()throws IOException{
         ArrayList<String> add = new ArrayList<>();
         String[] words = content.split("\"+");
 
