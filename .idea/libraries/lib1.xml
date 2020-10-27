@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="lib1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/gradle-4.10.3/samples/webApplication/customized/lib/providedCompile-transitive-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/gradle-4.10.3/samples/webApplication/customized/lib/compile-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/gradle-4.10.3/samples/webApplication/customized/lib/compile-transitive-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/gradle-4.10.3/samples/webApplication/customized/lib/otherLib-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/gradle-4.10.3/samples/webApplication/customized/lib/providedRuntime-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/gradle-4.10.3/samples/webApplication/customized/lib/runtime-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/gradle-4.10.3/samples/webApplication/customized/lib/providedCompile-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

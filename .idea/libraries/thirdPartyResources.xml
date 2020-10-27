@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="thirdPartyResources">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/gradle-4.10.3/samples/userguide/files/archives/src/resources/thirdPartyResources.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="assets">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/gradle-4.10.3/samples/userguide/files/copy/src/main/assets.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

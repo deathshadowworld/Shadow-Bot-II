@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="lib-2.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/gradle-4.10.3/samples/userguide/dependencyManagement/customizingResolution/selectionRule/repo/org.sample/lib/2.0/lib-2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

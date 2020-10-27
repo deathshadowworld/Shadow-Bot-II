@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="api-1.5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/gradle-4.10.3/samples/userguide/dependencyManagement/customizingResolution/selectionRule/repo/org.sample/api/1.5/api-1.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

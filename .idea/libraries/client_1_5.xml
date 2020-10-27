@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="client-1.5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/gradle-4.10.3/samples/userguide/dependencyManagement/customizingResolution/metadataRule/repo/org.sample/client/1.5/client-1.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

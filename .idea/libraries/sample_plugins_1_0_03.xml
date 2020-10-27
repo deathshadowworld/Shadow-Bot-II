@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="sample-plugins-1.0.03">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/gradle-4.10.3/samples/plugins/resolutionRules/maven-repo/org/gradle/sample/sample-plugins/1.0.0/sample-plugins-1.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

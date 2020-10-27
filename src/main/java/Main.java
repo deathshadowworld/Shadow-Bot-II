@@ -32,9 +32,9 @@ import java.util.List;
 public class Main extends ListenerAdapter {
 
         private static String bot_master, token;
-        private static String cred_path = "C:/Users/testerr/Documents/bot_info/credentials.txt";
-        private static String react_path = "C:/Users/testerr/Documents/bot_info/customreactions.txt";
-        private static String pm_path = "C:/Users/testerr/Documents/bot_info/privatemessages.txt";
+        private static String cred_path = "C:\\Users\\USER\\Documents\\bot_info\\credentials.txt";
+        private static String react_path = "C:\\Users\\USER\\Documents\\bot_info\\customreactions.txt";
+        private static String pm_path = "C:\\Users\\USER\\Documents\\bot_info\\privatemessages.txt";
         private static ArrayList<String> promptlist = new ArrayList<>();
         private static ArrayList<String> answerlist = new ArrayList<>();
         private static ArrayList<String> prompt_pm = new ArrayList<>();

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="javadoc1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/docs/javadoc/package-search-index.zip!/" />
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/docs/javadoc/member-search-index.zip!/" />
+      <root url="jar://$PROJECT_DIR$/.gradle/4.10.3/docs/javadoc/type-search-index.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
